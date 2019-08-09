@@ -1,0 +1,17 @@
+{
+  "name": "aws-sam-app",
+  "config": {
+    "capabilities": "CAPABILITY_IAM",
+    "bucket": "example-bucket",
+    "lambda": "HelloWorldFunction"
+  },
+  "scripts": {
+    "start": "sam local invoke $npm_package_config_lamda --event event.json",
+    "logs": "sam logs -n $npm_package_config_lamda --stack-name $npm_package_name --tail",
+    "build": "sam build",
+    "create-bucket": "aws s3 mb s3://$npm_package_config_bucket",
+    "package": "sam package --output-template-file packaged.yaml --s3-bucket $npm_package_config_bucket",
+    "deploy": "sam deploy --template-file packaged.yaml --stack-name $npm_package_name --capabilities $npm_package_config_capabilities",
+    "clean": "aws cloudformation delete-stack --stack-name $npm_package_name"
+  }
+}
